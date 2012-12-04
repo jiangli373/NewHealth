@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="jqueryui/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet">
+    <script src="javascript/handlebars/handlebars-1.0.0.beta.6.js"></script>
+    <script id="userTable" type="text/x-handlebars-template">
+        <table class="table table-bordered" cellspacing="0" border="1">
+            <thead>
+            <th>姓名</th>
+            <th>活动</th>
+            <th>生日</th>
+            <th class="wide">身份证号码</th>
+            <th>性别</th>
+            <th>身高</th>
+            <th>电话</th>
+            <th>email</th>
+            <th>居住城市</th>
+            <th class="wide">居住地址</th>
+            <th class="wide">备注</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <ul>
+                <li><a href="#">前一页</a></li>
+                <li onclick="getPage(1,10)"><a href="#" id="1" class="pagesnum" >1</a></li>
+                <li onclick="getPage(2,10)"> <a href="#" id="2" class="pagesnum" >2</a></li>
+                <li><a href="#" id="3" class="pagesnum" onclick="getPage(3,10)">3</a></li>
+                <li><a href="#" id="4" class="pagesnum" onclick="getPage(4,10)">4</a></li>
+                <li><a href="#">后一页</a></li>
+            </ul>
+        </div>
+    </script>
+    <script id="user" type="text/x-handlebars-template">
+        <tr class="userTr" data-value="{{_id}}">
+            <td>{{name}}</td>
+            <td>{{activity}}</td>
+            <td>{{birth}}</td>
+            <td>{{creditno}}</td>
+            <td>{{sex}}</td>
+            <td>{{height}}</td>
+            <td>{{phoneno}}</td>
+            <td>{{email}}</td>
+            <td>{{city}}</td>
+            <td>{{country}}</td>
+            <td>{{comment}}</td>
+        </tr>
+    </script>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<div id="dialog-form" title="注册">
+    <p class="validateTips">基本信息</p>
+
+    <form action="/adduser" method="post" id="userinfoform">
+        <fieldset>
+            <label for="username">姓名</label>
+            <input type="text" name="user[name]" id="username" class="text ui-widget-content ui-corner-all"/>
+            <label for="password">Password</label>
+            <input type="password" name="user[password]" id="password" value=""
+                   class="text ui-widget-content ui-corner-all"/>
+            <label for="activity">活动</label>
+            <input type="text" name="user[activity]" id="activity" class="text ui-widget-content ui-corner-all"/>
+            <label for="birth">生日</label>
+            <input type="date" name="user[birth]" id="birth" class="text ui-widget-content ui-corner-all"/>
+            <label for="creditno">身份证号码</label>
+            <input type="text" name="user[creditno]" id="creditno" value=""
+                   class="text ui-widget-content ui-corner-all"/>
+            <label for="sex">性别</label>
+            <input type="text" name="user[sex]" id="sex" value="" class="text ui-widget-content ui-corner-all"/>
+            <label for="height">身高(cm)</label>
+            <input type="number" name="user[height]" id="height" value="" class="text ui-widget-content ui-corner-all"/>
+            <label for="phoneno">电话</label>
+            <input type="text" name="user[phoneno]" id="phoneno" value="" class="text ui-widget-content ui-corner-all"/>
+            <label for="email">Email</label>
+            <input type="text" name="user[email]" id="email" value="" class="text ui-widget-content ui-corner-all"/>
+            <label for="city">居住城市</label>
+            <input type="text" name="user[city]" id="city" value="" class="text ui-widget-content ui-corner-all"/>
+            <label for="country">居住国家</label>
+            <input type="text" name="user[country]" id="country" value="" class="text ui-widget-content ui-corner-all"/>
+            <label for="comment">备注</label>
+            <input type="text" name="user[comment]" id="comment" value="" class="text ui-widget-content ui-corner-all"/>
+        </fieldset>
+    </form>
+</div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Health</a>
+
+            <div class="nav-collapse collapse">
+                <form class="navbar-form pull-right">
+                    <input type="text" class="span2" placeholder="用户名">
+                    <input type="password" class="span2" placeholder="密码">
+                    <button type="submit" class="btn">登录</button>
+                    <button class="btn" id="regeister">注册</button>
+                </form>
+                <ul class="nav">
+                    <li class="active"><a>首页</a></li>
+                    <li><a class="goList">用户列表</a></li>
+                    <li><a>关于</a></li>
+                    <li><a>联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Sidebar</li>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#" class="goList">用户列表</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+        <div class="span9" id="showUsers">
+            <div id="myCarousel" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="images/3.jpg">
+
+                        <div class="carousel-caption">
+                            <p>
+                                健康是指一个人在身体、精神和社会等方面都处于良好的状态。传统的健康观是“无病即健康”，现代人的健康观是整体健康，
+                                世界卫生组织提出“健康不仅是躯体没有疾病，还要具备心理健康、社会适应良好和有道德”。因此，现代人的健康内容包括：
+                                躯体健康、心理健康、心灵健康、社会健康、智力健康、道德健康、环境健康等。健康是人的基本权利。健康是人生的第一财富。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="images/1.jpg">
+
+                        <div class="carousel-caption">
+                            <p>
+                                健康是指一个人在身体、精神和社会等方面都处于良好的状态。传统的健康观是“无病即健康”，现代人的健康观是整体健康，
+                                世界卫生组织提出“健康不仅是躯体没有疾病，还要具备心理健康、社会适应良好和有道德”。因此，现代人的健康内容包括：
+                                躯体健康、心理健康、心灵健康、社会健康、智力健康、道德健康、环境健康等。健康是人的基本权利。健康是人生的第一财富。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="images/2.jpg">
+
+                        <div class="carousel-caption">
+                            <p>
+                                健康是指一个人在身体、精神和社会等方面都处于良好的状态。传统的健康观是“无病即健康”，现代人的健康观是整体健康，
+                                世界卫生组织提出“健康不仅是躯体没有疾病，还要具备心理健康、社会适应良好和有道德”。因此，现代人的健康内容包括：
+                                躯体健康、心理健康、心灵健康、社会健康、智力健康、道德健康、环境健康等。健康是人的基本权利。健康是人生的第一财富。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div>
+
+
+<hr>
+
+<footer>
+    <p>&copy; Company 2012</p>
+</footer>
+
+</div><!--/.fluid-container-->
+<script src="javascript/jquery/jquery-1.8.1.min.js"></script>
+<script src="jqueryui/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="javascript/underscore/underscore-min.js"></script>
+<script src="javascript/backbone/backbone-min.js"></script>
+
+<script src="javascript/user.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap-carousel.js"></script>
+<script src="bootstrap/js/bootstrap-alert.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#myCarousel").carousel();
+        $("#dialog-form").dialog({
+            autoOpen:false,
+            height:500,
+            width:350,
+            buttons:{
+                "注册":function () {
+                    $.ajax({
+                        url:"/adduser",
+                        type:"post",
+                        data:{
+                            name:$("#username").val(),
+                            password:$("#password").val(),
+                            creditno:$("#creditno").val(),
+                            birth:$("#birth").val(),
+                            activity:$("#activity").val(),
+                            sex:$("#sex").val(),
+                            height:$("#height").val(),
+                            phoneno:$("#phoneno").val(),
+                            email:$("#email").val(),
+                            city:$("#city").val(),
+                            country:$("#country").val(),
+                            comment:$("#comment").val()
+                        },
+                        success:function (data) {
+                            if (data.status == "success") {
+                                $("#dialog-form").dialog("close");
+                                $("#showUsers").empty();
+                                var userlist = new user.list;
+                                userlist.render().$el.appendTo("#showUsers");
+                            }
+                        }
+                    });
+                },
+                "取消":function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#regeister").on("click", function () {
+            $("#dialog-form").dialog("open");
+            return false;
+
+        });
+        $(".goList").on("click", function (e) {
+            $(e.target).parent().addClass("active");
+            $("#showUsers").empty();
+            var userlist = new user.list;
+            userlist.render().$el.appendTo("#showUsers");
+        });
+    });
+    function getPage(page,limit){
+        console.log(this);
+        $(this).addClass("active");
+        $.ajax({
+                url:'/getUserByPage',
+                type:'post',
+                data:{page:page,limit:limit},
+                success:function(result){
+                    var users=result.users;
+                    console.log(result);
+                    if (result.status == 'success' && result.length != 0) {
+                        $('.userTr').remove();
+                        for(var i=0;i<users.length;i++){
+                            $('<tr class="userTr" data-value="'+users[i]._id+'">'+
+                                    '<td>'+users[i].name+'</td>'+
+                                    '<td>'+users[i].activity+'</td>'+
+                                    '<td>'+users[i].birth+'</td>'+
+                                    '<td>'+users[i].creditno+'</td>'+
+                                    '<td>'+users[i].sex+'</td>'+
+                                    '<td>'+users[i].height+'</td>'+
+                                    '<td>'+users[i].phoneno+'</td>'+
+                                    '<td>'+users[i].email+'</td>'+
+                                    '<td>'+users[i].city+'</td>'+
+                                    '<td class="wide">'+users[i].country +'</td>'+
+                                    '<td class="wide">'+users[i].comment+'</td>'+
+                                    +'</tr>').appendTo('table');
+                        }
+                    } else {
+                        alert('连接不到服务器！');
+                    }
+                }
+            });
+    }
+    function showdetail(id){
+        $.ajax({
+            url:'/getUSerById/'+id,
+            type:'get',
+            success:function(data){
+                name:$("#username").val(data.name),
+                    $("#creditno").val(data.creditno),
+                       $("#birth").val(data.birth),
+                        $("#activity").val(data.activity),
+                        $("#sex").val(data.sex),
+                       $("#height").val(data.height),
+                       $("#phoneno").val(data.phoneno),
+                        $("#email").val(data.email),
+                        $("#city").val(data.city),
+                        $("#country").val(data.country),
+                       $("#comment").val(data.comment)
+                $("#dialog-form").dialog("open");
+            }
+            });
+    }
+</script>
+
+</body>
+</html>

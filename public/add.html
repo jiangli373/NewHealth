@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>add</title>
+    <meta charset="utf-8">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/style.css" rel="stylesheet">
+    <script src="javascript/jquery/jquery-1.8.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <form accept-charset="UTF-8" action="/admin/user/create" id="new_user"
+          method="post">
+        <div class="row-fluid">
+            <div class="span12">
+                <h2>活動報名資料</h2>
+            </div>
+
+            <div class="span12">
+                <label class="">
+                    <abbr title="required">*</abbr> 參加活動
+                </label>
+                <select class="select required" id="user_campaign" name="user[campaign]">
+                    <option value="">請選擇</option>
+                    <option value="健康大使">健康大使</option>
+                    <option value="体重管理挑战赛">体重管理挑战赛</option>
+                </select>
+                <span class="hint">活動設定後無法修改</span>
+            </div>
+
+            <div class="span2">
+                <label class="string optional" for="user_product_no">
+                    抽獎登錄編號
+                </label>
+                <input class="string optional" id="user_product_no" maxlength="10" name="user[product_no]" size="10"
+                       type="text">
+            </div>
+
+            <div class="span12">
+                <label class="string required" for="user_serial_no">
+                    <abbr title="required">*</abbr> 直銷商編號
+                </label>
+                <input class="string required" id="user_serial_no" maxlength="30" name="user[serial_no]"
+                       required="required"
+                       size="30" type="text">
+                <span class="hint">直銷商編號即為參賽者之登入帳號，若無直銷商編號請輸入手機號碼</span>
+            </div>
+
+            <div class="span12">
+                <label class="string required" for="user_upline_no">
+                    <abbr title="required">*</abbr>推薦人直銷商編號
+                </label>
+                <input class="string required" id="user_upline_no" maxlength="30" name="user[upline_no]"
+                       required="required"
+                       size="30" type="text">
+            </div>
+
+            <div class="span12">
+                <label class="string required" for="user_upline_name">
+                    <abbr title="required">*</abbr>推薦人直銷商姓名
+                </label>
+                <input class="string required" id="user_upline_name" maxlength="20" name="user[upline_name]"
+                       required="required" size="20" type="text">
+            </div>
+
+        </div>
+        <input style="font-size: 20px;height: 31px;" data-confirm="確認新增參賽者" name="commit" type="submit" value="確認送出">
+    </form>
+</div>
+</body>
+</html>

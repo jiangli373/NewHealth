@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Health</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <!--<link href="stylesheets/style.css" rel="stylesheet">-->
+</head>
+<body>
+<!--<div class="container navbar-wrapper" id="app">-->
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <ul class="nav">
+                <li class="active"><a>首页</a></li>
+                <li><a>用户列表</a></li>
+                <li><a>关于</a></li>
+                <li><a>联系我们</a></li>
+            </ul>
+            <div class="nav-collapse collapse">
+                <form class="navbar-form pull-right">
+                    <input type="text" class="span2" placeholder="用户名">
+                    <input type="password" class="span2" placeholder="密码">
+                    <button type="submit" class="btn">登录</button>
+                    <button class="btn" id="regeister">注册</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        列表头
+                    </li>
+                    <li class="active">
+                        <a href="#">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">类库</a>
+                    </li>
+                    ...
+                </ul>
+            </div>
+        </div>
+        <div class="span10">
+            <div id="myCarousel" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="images/3.jpg">
+
+                        <div class="carousel-caption">
+                            <p>
+                                健康是指一个人在身体、精神和社会等方面都处于良好的状态。传统的健康观是“无病即健康”，现代人的健康观是整体健康，
+                                世界卫生组织提出“健康不仅是躯体没有疾病，还要具备心理健康、社会适应良好和有道德”。因此，现代人的健康内容包括：
+                                躯体健康、心理健康、心灵健康、社会健康、智力健康、道德健康、环境健康等。健康是人的基本权利。健康是人生的第一财富。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="images/1.jpg">
+
+                        <div class="carousel-caption">
+                            <p>
+                                健康是指一个人在身体、精神和社会等方面都处于良好的状态。传统的健康观是“无病即健康”，现代人的健康观是整体健康，
+                                世界卫生组织提出“健康不仅是躯体没有疾病，还要具备心理健康、社会适应良好和有道德”。因此，现代人的健康内容包括：
+                                躯体健康、心理健康、心灵健康、社会健康、智力健康、道德健康、环境健康等。健康是人的基本权利。健康是人生的第一财富。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="images/2.jpg">
+
+                        <div class="carousel-caption">
+                            <p>
+                                健康是指一个人在身体、精神和社会等方面都处于良好的状态。传统的健康观是“无病即健康”，现代人的健康观是整体健康，
+                                世界卫生组织提出“健康不仅是躯体没有疾病，还要具备心理健康、社会适应良好和有道德”。因此，现代人的健康内容包括：
+                                躯体健康、心理健康、心灵健康、社会健康、智力健康、道德健康、环境健康等。健康是人的基本权利。健康是人生的第一财富。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="javascript/jquery/jquery-1.8.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap-carousel.js"></script>
+<script src="bootstrap/js/bootstrap-alert.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        var login = $('<div class="alert container" style="z-index: 1000">' +
+                '<a data-dismiss="alert" class="close">x</a>' +
+                '<form>' +
+                '<label>用户名</label><input type="text" class="username">' +
+                '<label>密码</label><input type="password" class="password">' +
+                '<button id="regist">注册</button>' +
+                '<button id="cancel">取消</button>' +
+                '</form>' +
+                '</div>');
+//        $("#myCarousel").carousel();
+        $("#regeister").on("click", function () {
+//            login.appendTo("#app");
+        });
+    });
+
+</script>
+</body>
+</html>
